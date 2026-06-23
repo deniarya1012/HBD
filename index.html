@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday My Universe 🤍</title>
+
+    <!-- Tailwind CSS v4 & Animate.css -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <style>
+        body {
+            background-image: url('https://images.unsplash.com/photo-1543722530-d2c3201371e7?q=80&w=2074&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Efek Glassmorphism */
+        .glass {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            z-index: 10;
+        }
+
+        /* Custom scrollbar tipis */
+        .custom-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #f472b6;
+            border-radius: 10px;
+        }
+
+        /* --- BACKGROUND BINTANG BERKEDIP --- */
+        .stars-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex justify-center items-center p-5">
+
+    <!-- Container Bintang Berkedip -->
+    <div class="stars-container" id="starsBg"></div>
+
+    <!-- Kartu Utama -->
+    <div class="glass rounded-3xl shadow-2xl p-6 w-full max-w-md animate__animated animate__backInDown">
+        <div id="kartu" class="bg-white/90 rounded-2xl p-6 text-center shadow-lg transition-all duration-500">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-2">
+                Happy Birthday My Universe 🤍
+            </h2>
+            <h1 class="text-4xl font-bold text-pink-500 animate__animated animate__pulse animate__infinite">
+                Siti Mulyani
+            </h1>
+            <p class="text-gray-600 mt-3">
+                Ada sesuatu yang spesial untuk sayaaaaaang hari ini 🤍✨
+            </p>
+            <button
+                onclick="ubahKartu()"
+                class="mt-5 w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-xl transition duration-300 animate__animated animate__tada animate__delay-1s cursor-pointer">
+                Klik Disini Sayaaaaangku 🤍
+            </button>
+        </div>
+    </div>
+
+    <!-- Pustaka Canvas-Confetti untuk efek bintang jatuh -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        // 1. GENERATE BINTANG BERKEDIP DI BACKGROUND
+        const starsBg = document.getElementById('starsBg');
+        const totalStars = 40;
+
+        for (let i = 0; i < totalStars; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            const size = Math.random() * 3 + 2;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+            star.style.animationDelay = `${Math.random() * 3}s`;
+            starsBg.appendChild(star);
+        }
+
+        // 2. FUNGSI SAAT TOMBOL DIKLIK
+        let kartu = document.getElementById("kartu");
+
+        function ubahKartu(){
+            // Efek Confetti Bintang melonjak dari bawah kiri dan kanan
+            const duration = 3 * 1000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 4,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#f472b6', '#fbbf24', '#ffffff'],
+                    shapes: ['star']
+                });
+                confetti({
+                    particleCount: 4,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#f472b6', '#fbbf24', '#ffffff'],
+                    shapes: ['star']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+
+            // Mengganti isi kartu dengan animasi masuk & teks bertahap + Tombol Share
+            kartu.innerHTML = `
+                <div class="animate__animated animate__fadeInUp text-left">
+
+                    <div class="mb-4 sticky top-0 bg-white/90 pt-1 pb-2 z-10 animate__animated animate__zoomIn animate__delay-1s">
+                        <iframe
+                            class="w-full rounded-xl shadow-lg"
+                            height="220"
+                            src="https://www.youtube.com/embed/5WWI3o6-cnY?si=wC63Hn5hs1GQn66H" title="YouTube video player" frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+
+                    <div class="max-h-[250px] overflow-y-auto pr-1 custom-scroll text-sm font-medium text-gray-700 leading-relaxed space-y-4">
+                        
+                        <p class="animate__animated animate__fadeInUp animate__delay-1s">
+                            Sayaaaaaaangkuu 🤍<br><br>
+                            Selamat ulang tahun yaa Sayaaaaangkuu...
+                        </p>
+
+                        <p class="animate__animated animate__fadeInUp animate__delay-2s">
+                            Semoga di umur yang baru ini sayang selalu diberikan kesehatan,
+                            kebahagiaan, umur yang berkah, rezeki yang melimpah,
+                            serta dimudahkan segala urusannya oleh Allah SWT.
+                            Aamiin Ya Rabbal Alamin 🤲
+                        </p>
+
+                        <p class="animate__animated animate__fadeInUp animate__delay-3s">
+                            Terima kasih sudah hadir dan menjadi bagian terindah
+                            dalam hidup aa. Terima kasih sudah selalu sabar,
+                            selalu mendukung, dan selalu ada di setiap cerita yang kita lalui.
+                        </p>
+
+                        <p class="animate__animated animate__fadeInUp animate__delay-4s">
+                            Aa mungkin engga sempurna,
+                            tapi aa akan selalu berusaha menjadi yang terbaik untuk neeeng. 
+                        </p>
+
+                        <p class="animate__animated animate__fadeInUp animate__delay-5s">
+                            Semoga semua impian dan harapan yang sayaaang inginkan
+                            dapat terwujud satu per satu yaaa. Semoga apa yang kita usahakan sekarang bisa terwujud di tahun depan ya sayaaangnya aa. 
+                        </p>
+                        
+                        <p class="animate__animated animate__fadeInUp animate__delay-5s">
+                            Aa akan selalu mendoakan
+                            yang terbaik untuk neeeng dan untuk kita kedepannya ya sayaaaaaangku🤍 
+                        </p>
+
+                        <p class="font-bold text-pink-500 text-center text-base animate__animated animate__heartBeat animate__delay-5s">
+                            I Love You Today,<br>
+                            Tomorrow<br>
+                            Forever<br>
+                            and Always 🤍✨
+                        </p>
+
+                        <h2 class="mt-5 text-center text-pink-500 font-bold text-lg animate__animated animate__fadeIn animate__delay-5s">
+                            - With Love, Deni -
+                        </h2>
+                    </div>
+
+                    <!-- CONTAINER TOMBOL AKSI -->
+                    <div class="mt-5 space-y-2 animate__animated animate__fadeIn animate__delay-5s">
+                        <!-- Tombol Tutup -->
+                        <button
+                            onclick="refreshPage()"
+                            class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-xl transition duration-300 cursor-pointer">
+                            Tutup🤍
+                        </button>
+
+                        <!-- Tombol Bagikan ke Instagram -->
+                        <button
+                            onclick="bagikanKeInstagram()"
+                            class="w-full bg-gradient-to-r from-purple-600 via-pink-500 to-yellow-500 hover:opacity-90 text-white font-bold py-3 rounded-xl transition duration-300 cursor-pointer flex items-center justify-center gap-2 shadow-md">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                            </svg>
+                            Share🤍
+                        </button>
+                    </div>
+
+                </div>
+            `;
+        }
+
+        // 3. FUNGSI BAGIKAN INTERAKTIF
+        function bagikanKeInstagram() {
+            const shareData = {
+                title: 'Happy Birthday My Universe 🤍',
+                text: 'Hari ini ada yang sedang berulang tahun! Klik untuk melihat ucapan spesialku untuk Siti Mulyani ✨🤍',
+                url: window.location.href // Otomatis mengambil link website saat ini
+            };
+
+            // Memeriksa apakah browser mendukung Web Share API (Umumnya aktif di HP)
+            if (navigator.share) {
+                navigator.share(shareData)
+                    .then(() => console.log('Berhasil dibagikan!'))
+                    .catch((err) => console.log('Batal membagikan:', err));
+            } else {
+                // Alternatif fallback jika dibuka di Laptop/Desktop (Salin Link)
+                navigator.clipboard.writeText(window.location.href);
+                alert('Tautan website berhasil disalin! Kamu bisa langsung membagikannya di Instagram Direct Message (DM) atau bio kamu 🤍');
+            }
+        }
+
+        function refreshPage(){
+            location.reload();
+        }
+    </script>
+
+</body>
+</html>
