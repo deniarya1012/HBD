@@ -235,9 +235,11 @@
         // 3. FUNGSI KIRIM CHAT KE WHATSAPP DENI
         function kirimKeCalonSuami() {
             const nomorWa = "6285159941012";
+            const pesan = "-";
             const urlWa = `https://api.whatsapp.com/send?phone=${nomorWa}&text=${encodeURIComponent(pesan)}`;
             window.open(urlWa, '_blank');
         }
+
 
         function refreshPage(){
             location.reload();
